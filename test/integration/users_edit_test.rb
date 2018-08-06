@@ -5,6 +5,8 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     @user = users(:one)
    end
 
+# le formulaire edit doit renvoyer une erreur si un personne ne passe pas les bons paramètres
+
   test 'unsuccessful edit' do
     log_in_as(@user)
     get edit_user_path(@user)
@@ -12,7 +14,6 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     patch user_path(@user), params: { user: { first_name:  '',
                                               last_name: 'Fructuoso',
                                               email: 'foo@invalid' } }
-
   end
 
   test 'successful edit' do

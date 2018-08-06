@@ -7,6 +7,7 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     @user = users(:one)
   end
 
+# tester la page d'accueil : faire en sorte qu'elle affiche les bons liens, en fonction si la personne est connectée ou non
   test 'show links' do
     get root_url
     assert_response :success
@@ -17,15 +18,17 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     else
       assert_select 'p' do
         assert_select 'a[href=?]', '/login', text: 'Connecte-toi ici'
-        assert_select 'a[href=?]', '/users/new', text: "Inscris-toi ici"
+        assert_select 'a[href=?]', '/users/new', text: 'Inscris-toi ici'
       end
     end
   end
 
+# tester la navbar, qui doit afficher les bons liens
   test 'show navbar links' do
     get user_url(@user)
     assert_response :success
     if logged_in?
+      # Le lien de show doit être accessible de la navbar pour toute personne qui est login
       assert_select 'a[href=?]', '/users/:id', text: 'Ton compte'
       assert_select 'a[href=?]', '/users/:id', text: 'Profil'
       assert_select 'a[href=?]', '/logout', text: 'Se déconnecter'

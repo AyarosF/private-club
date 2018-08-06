@@ -6,6 +6,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @other_user = users(:two)
   end
 
+  # si une personne non login essaie d'aller sur une page edit, le site va la rediriger vers la page de login en lui disant de se login pour aller à ce contenu
   test 'should redirect edit when not logged in' do
     get edit_user_path(@user)
     assert_not flash.empty?
@@ -20,6 +21,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_url
   end
 
+  # si une personne login essaie de modifier un profil autre que le sien, le site va la rediriger vers la page d'accueil en lui disant que l'accés est restreint
   test 'should redirect edit when logged in as wrong user' do
     log_in_as(@other_user)
     get edit_user_path(@user)
@@ -52,6 +54,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+# tester la page du club, qui ne doit être accessible qu'aux personnes login
   test 'should access private page if looged' do
     if log_in_as(@user)
       get index_url

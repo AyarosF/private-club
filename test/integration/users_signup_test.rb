@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class UsersSignupTest < ActionDispatch::IntegrationTest
+
+  # tester la page d'inscription, qui doit retourner une erreur si la personne n'a pas rentré les bons champs 
   test 'invalid signup information' do
     get new_user_path
     assert_no_difference 'User.count' do

@@ -5,6 +5,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     @user = users(:one)
   end
 
+# tester la page de login, qui doit login la personne si elle rentre un bon ID, et lui renvoyer un message d'erreur si elle ne renvoie pas un bon paramètre
   test 'login with invalid information' do
     get login_path
     assert_template 'sessions/new'
