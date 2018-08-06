@@ -6,19 +6,17 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     unless logged_in?
-      redirect_to login_path, flash: { danger: "Pour accéder à cette page, il faut d'abord vous connecter." }
+      redirect_to login_path, flash: { danger: 'Connecte-toi pour accéder à la page privée.' }
     end
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @user = User.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @user = User.new(user_params)
@@ -40,7 +38,7 @@ class UsersController < ApplicationController
 
   def logged_in_user
     unless logged_in?
-      flash[:danger] = 'Please log in.'
+      flash[:danger] = 'Connecte-toi ici'
       redirect_to login_url
     end
   end
@@ -52,8 +50,11 @@ class UsersController < ApplicationController
 
   def correct_user
     @user = User.find(params[:id])
-    redirect_to(root_url) unless current_user?(@user)
+    unless current_user?(@user)
+      redirect_to root_path, flash: { danger: "Tu crois quand même pas qu'on va te laisser éditer le profil d'un autre ?" }
+    end
   end
+
 
   private
 
