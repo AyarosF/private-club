@@ -35,9 +35,12 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update_attributes(user_params)
-    flash[:success] = 'Ton profil a été mis à jour'
-    redirect_to @user
+    if @user.update_attributes(user_params)
+      flash[:success] = 'Ton profil a été mis à jour'
+      redirect_to @user
+    else
+      render 'edit'
+    end
   end
 
   def logged_in_user
