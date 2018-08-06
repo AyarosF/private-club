@@ -22,8 +22,15 @@
   <%= @user.email %>
 </p>
 
-<%= link_to 'Editer', edit_user_path(@user), class:'btn btn-primary' %>
-<%= link_to 'Retour', users_path, class:'btn btn-secondary' %>
+<% if current_user?(@user) %>
+
+    <%= link_to "Editer", edit_user_path(@user), class: 'btn btn btn-primary' %>
+
+    <%= link_to "Supprimer", @user, method: :delete,
+                                data: { confirm: "You sure?" }, class: 'btn btn-sm btn-danger'%>
+<% end %>
+</a>
+
 </div>
 <div class=col-md-3>
 </div>
