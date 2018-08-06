@@ -10,7 +10,11 @@ class UsersController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    unless logged_in?
+      redirect_to login_path, flash: { danger: 'Connecte-toi pour accéder à cette page' }
+    end
+  end
 
   def new
     @user = User.new
@@ -54,7 +58,6 @@ class UsersController < ApplicationController
       redirect_to root_path, flash: { danger: "Tu crois quand même pas qu'on va te laisser éditer le profil d'un autre ?" }
     end
   end
-
 
   private
 

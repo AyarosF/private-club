@@ -41,11 +41,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_url
   end
 
+# Si une personne non login essaie d'aller sur une page show, le site va la rediriger vers la page de login en lui disant de se login pour aller à ce contenu
   test 'should access users profiles if logged' do
     if log_in_as(@user)
       get user_path(@user.id)
       assert_response :success
-
     else
       assert_template 'sessions/new'
       assert_not flash.empty?
@@ -54,12 +54,38 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-# tester la page du club, qui ne doit être accessible qu'aux personnes login
-  test 'should access private page if looged' do
+  # La page de show doit afficher les informations de l'utilisateur
+  test 'should show user info' do
+    if log_in_as(@user)
+      get user_url(@user)
+      assert_response :success
+      assert_select 'p', @user.first_name
+      assert_select 'p', @user.last_name
+      assert_select 'p', @user.email
+    else
+      get login_url
+      assert_response :success
+    end
+  end
+
+  # tester la page du club, qui ne doit être accessible qu'aux personnes login
+  test 'should access private page if logged' do
     if log_in_as(@user)
       get index_url
       assert_response :success
+    else
+      get login_url
+      assert_response :success
+    end
+  end
 
+  # La page doit renvoyer la liste des personnes inscrites au site
+  test 'should show users profile on private page' do
+    if log_in_as(@user)
+      get users_url
+      assert_select 'td', @user.first_name
+      assert_select 'td', @user.last_name
+      assert_select 'td', @user.email
     else
       get login_url
       assert_response :success
