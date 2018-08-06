@@ -1,0 +1,31 @@
+<% if logged_in? %>
+<div class="row">
+<div class=col-md-3>
+</div>
+  <div class="col-md-6">
+
+<h1>Informations</h1>
+
+<p id="notice"><%= notice %></p>
+
+<h4>Prénom :</h4>
+  <%= @user.first_name %>
+</p>
+
+<p>
+  <h4>Nom :</h4>
+  <%= @user.last_name %>
+</p>
+
+<p>
+  <h4>E-mail :</h4>
+  <%= @user.email %>
+</p>
+
+<%= link_to 'Editer', edit_user_path(@user), class:'btn btn-primary' %>
+<%= link_to 'Retour', users_path, class:'btn btn-secondary' %>
+</div>
+<div class=col-md-3>
+</div>
+</div>
+<%end%>
