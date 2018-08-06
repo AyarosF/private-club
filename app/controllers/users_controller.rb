@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
+  before_action :logged_in_user, only: %i[index edit update]
+  before_action :correct_user, only: %i[edit update]
 
   def index
     @users = User.all
@@ -8,13 +10,15 @@ class UsersController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+  end
 
   def new
     @user = User.new
   end
 
-  def edit; end
+  def edit
+  end
 
   def create
     @user = User.new(user_params)
@@ -34,9 +38,21 @@ class UsersController < ApplicationController
     redirect_to @user
   end
 
+  def logged_in_user
+    unless logged_in?
+      flash[:danger] = 'Please log in.'
+      redirect_to login_url
+    end
+  end
+
   def destroy
     @user.destroy
     redirect_to '/'
+  end
+
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_url) unless current_user?(@user)
   end
 
   private

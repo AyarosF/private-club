@@ -8,14 +8,14 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should display navbar selectors' do
-    get 'users/:id'
+    get user_url(@user)
     assert_response :success
     if logged_in?
-      assert_select 'a[href=?]', '/users/:id/edit', text: 'Editer'
-      assert_select 'a[href=?]', '/logout', text: 'Se déconnecter'
+      assert_select 'li', '/users/:id/edit', text: 'Editer'
+      assert_select 'li', '/logout', text: 'Se déconnecter'
     else
-      assert_select 'a[href=?]', '/login', text: 'Se connecter'
-      assert_select 'a[href=?]', '/users/new', text: "S'inscrire"
+      assert_select 'li', '/login', text: 'Se connecter'
+      assert_select 'li', '/users/new', text: "S'inscrire"
     end
   end
 
@@ -24,12 +24,12 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     if logged_in?
       assert_select 'p' do
-        assert_select 'a[href=?]', '/private', text: 'Accédez ici à votre espace privé.'
+        assert_select 'li', '/users', text: 'Page privée'
       end
     else
       assert_select 'p' do
-        assert_select 'a[href=?]', '/login', text: 'Connectez-vous'
-        assert_select 'a[href=?]', '/users/new', text: 'inscrivez-vous'
+        assert_select 'li', '/login', text: 'Se connecter'
+        assert_select 'li', '/users/new', text: "S'inscrire"
       end
     end
   end
