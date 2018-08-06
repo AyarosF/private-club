@@ -26,6 +26,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     log_in_as(@other_user)
     get edit_user_path(@user)
     assert_redirected_to root_url
+    assert_not flash.empty?
   end
 
   test 'should redirect update when logged in as wrong user' do
@@ -41,16 +42,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_url
   end
 
-# Si une personne non login essaie d'aller sur une page show, le site va la rediriger vers la page de login en lui disant de se login pour aller à ce contenu
+  # Si une personne non login essaie d'aller sur une page show, le site va la rediriger vers la page de login en lui disant de se login pour aller à ce contenu
   test 'should access users profiles if logged' do
     if log_in_as(@user)
       get user_path(@user.id)
       assert_response :success
     else
       assert_template 'sessions/new'
+      get login_path
       assert_not flash.empty?
-      get root_path
-      assert flash.empty?
     end
   end
 
@@ -76,6 +76,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     else
       get login_url
       assert_response :success
+      assert_not flash.empty?
     end
   end
 
