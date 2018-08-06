@@ -7,30 +7,30 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     @user = users(:one)
   end
 
-  test 'should display navbar selectors' do
-    get user_url(@user)
-    assert_response :success
-    if logged_in?
-      assert_select 'li', '/users/:id/edit', text: 'Editer'
-      assert_select 'li', '/logout', text: 'Se déconnecter'
-    else
-      assert_select 'li', '/login', text: 'Se connecter'
-      assert_select 'li', '/users/new', text: "S'inscrire"
-    end
-  end
-
-  test 'should display body links' do
+  test 'should display links' do
     get root_url
     assert_response :success
     if logged_in?
       assert_select 'p' do
-        assert_select 'li', '/users', text: 'Page privée'
+        assert_select 'a[href=?]', '/users', text: 'Clique ici pour accéder à la page privée'
       end
     else
       assert_select 'p' do
-        assert_select 'li', '/login', text: 'Se connecter'
-        assert_select 'li', '/users/new', text: "S'inscrire"
+        assert_select 'a[href=?]', '/login', text: 'Connecte-toi ici'
+        assert_select 'a[href=?]', '/users/new', text: "Inscris-toi ici"
       end
+    end
+  end
+
+  test 'should display navbar links' do
+    get user_url(@user)
+    assert_response :success
+    if logged_in?
+      assert_select 'a[href=?]', '/users/:id', text: 'Ton compte'
+      assert_select 'a[href=?]', '/logout', text: 'Se déconnecter'
+    else
+      assert_select 'a[href=?]', '/login', text: 'Se connecter'
+      assert_select 'a[href=?]', '/users/new', text: "S'inscrire"
     end
   end
 end

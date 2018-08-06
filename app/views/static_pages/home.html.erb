@@ -1,2 +1,18 @@
-<h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
+<div class="row container-fluid">
+<div class=col-md-3>
+</div>
+<div class="col-md-6">
+<% if logged_in? %>
+  <h1>Salut salut !</h1>
+  <p>Vive le RC Strasbourg</p>
+  <p><%= link_to "Clique ici pour accéder à la page privée", index_path %></p>
+
+<% else %>
+  <h1>Salut salut !</h1>
+  <p>Vive le RC Strasbourg</p>
+  <p><%= link_to "Connecte-toi ici", login_path %> ou <%= link_to "Inscris-toi ici", new_user_path %> pour accéder à la page privée</p>
+<% end %>
+</div>
+<div class=col-md-3>
+</div>
+</div>
