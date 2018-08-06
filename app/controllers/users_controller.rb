@@ -27,7 +27,7 @@ class UsersController < ApplicationController
 
     if @user.save
       log_in @user
-      flash[:success] = 'Voili voilou'
+      flash[:success] = 'Bienvenue !!'
       redirect_to @user
     else
       render 'new'
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
 
   def update
     @user.update_attributes(user_params)
-    flash[:success] = 'Profil mis à jour'
+    flash[:success] = 'Ton profil a été mis à jour'
     redirect_to @user
   end
 
