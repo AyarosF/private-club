@@ -7,7 +7,7 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     @user = users(:one)
   end
 
-  test 'should display links' do
+  test 'show links' do
     get root_url
     assert_response :success
     if logged_in?
@@ -22,11 +22,12 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'should display navbar links' do
+  test 'show navbar links' do
     get user_url(@user)
     assert_response :success
     if logged_in?
       assert_select 'a[href=?]', '/users/:id', text: 'Ton compte'
+      assert_select 'a[href=?]', '/users/:id', text: 'Profil'
       assert_select 'a[href=?]', '/logout', text: 'Se déconnecter'
     else
       assert_select 'a[href=?]', '/login', text: 'Se connecter'
