@@ -126,7 +126,7 @@ input {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: rgb(166, 166, 166);
+    background-color: rgb(45, 46, 47);
     color: white;
     text-align: center;
     padding-top: 10px;
@@ -139,4 +139,20 @@ input {
 .showtext #sijamais {
   font-size: 15px;
   font-variant:small-caps;
+}
+
+.members {
+  margin-bottom: 50px;
+}
+
+.table-striped {
+  // text-align: center;
+  margin-left: auto;
+ margin-right: auto;
+  width: 70%;
+}
+
+#profilebutton {
+  margin-left: 220px;
+  margin-top: 50px;
 }

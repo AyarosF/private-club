@@ -59,9 +59,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     if log_in_as(@user)
       get user_url(@user)
       assert_response :success
-      assert_select 'p', @user.first_name
-      assert_select 'p', @user.last_name
-      assert_select 'p', @user.email
+      assert_select 'td', @user.first_name
+      assert_select 'td', @user.last_name
+      assert_select 'td', @user.email
     else
       get login_url
       assert_response :success
